@@ -3,7 +3,7 @@ import express from 'express';
 import { createUser, getUsersByEmail } from '../db/users';
 import { authentication, random } from '../helpers';
 
-const login = async(req: express.Request, res: express.Response) => {
+export const login = async(req: express.Request, res: express.Response) => {
     try {
         const { email, password } = req.body;
 
@@ -20,7 +20,7 @@ const login = async(req: express.Request, res: express.Response) => {
         const expectedHash = authentication(user.authentication.salt, password);
 
         if (user.authentication.password !== expectedHash) {
-            return res.sendStatus(400);
+            return res.sendStatus(403);
         }
 
         const salt = random();
