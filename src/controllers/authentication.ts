@@ -28,7 +28,7 @@ export const login = async(req: express.Request, res: express.Response) => {
         user.authentication.sessionToken = authentication(salt, user._id.toString());
         await user.save();
 
-        res.cookie('TypeScript-Auth', user.authentication.sessionToken, { domain: 'localhost', path: '/' });
+        res.cookie('TypeScript-Auth', user.authentication.sessionToken, {httpOnly: true, path: '/' });
         return res.status(200).json(user).end();
     } catch (error) {
         console.log(error);
